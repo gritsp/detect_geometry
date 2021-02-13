@@ -5,7 +5,6 @@ from color import Colors
 def on_trackbar(v):
     pass
 
-global col
 
 def openCamera():
     cap = cv2.VideoCapture(1)
@@ -20,7 +19,7 @@ def openCamera():
         
         if ret == True:            
             cv2.imshow('shapes', col.findGeometry())
-            if cv2.waitKey(30) & 0xFF == ord('q'):
+            if cv2.waitKey(20) & 0xFF == ord('q'):
                 break
         else:
             break
@@ -67,6 +66,20 @@ def getRangeColor():
         else:
             break
 
-# getRangeColor()
-openCamera()
-cv2.destoryAllWindows()
+
+def main():
+    print('1 : Choose range color\n2 : Open Camera')
+    i = str(input('>'))
+    while i!='1' and i!='2':
+        print('1 : Choose range color\n2 : Open Camera')
+        i = str(input('?>'))
+        if i=='1' or i=='2':
+            break
+    if i=='1':
+        getRangeColor()
+    else:
+        openCamera()
+    cv2.destoryAllWindows()
+
+if __name__ == '__main__':
+    main()
