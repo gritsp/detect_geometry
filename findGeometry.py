@@ -6,6 +6,7 @@ class geometryColor:
         self.frame = frame
         self.hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     
+    #This is range of color in hsv pixel[0] = H, pixel[1] = S, pixel[2] = V
     def isColor(self,pixel):
         if 0<=pixel[0]<=180 and 0<=pixel[1]<255 and pixel[2]<30:
             return 'Black'
@@ -34,6 +35,7 @@ class geometryColor:
             print(pixel)
             return 'Unknow'
 
+    #This will mask by theshold img and noise reduce by erode
     def mask(self,th):
         img_gray = cv2.cvtColor(self.frame,cv2.COLOR_BGR2GRAY)
         _,binary = cv2.threshold(img_gray,th,255,cv2.THRESH_BINARY)
@@ -41,6 +43,7 @@ class geometryColor:
         erosion = cv2.erode(binary,kernal)
         return erosion
 
+    #This will find geometru of object by findContours and get pixel in center of obj to get color range
     def findGeometry(self,thres):
         contours , hierarchy = cv2.findContours(thres, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
         for contour in contours:

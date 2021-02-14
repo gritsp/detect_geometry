@@ -2,9 +2,11 @@ import cv2
 import numpy as np
 from findGeometry import geometryColor
 
+#medthod of trackbar
 def on_trackbar(v):
     pass
 
+#this medthod will open camera by input theshold value
 def openVideoCapture(thresh):
     cap = cv2.VideoCapture(1)
     cap.set(3, 1280)
@@ -14,19 +16,28 @@ def openVideoCapture(thresh):
 
     while cap.isOpened:
         ret, frame = cap.read()
+
+        #let frame = class geometryColor
         frame = geometryColor(frame)
+        
+        #mask by theshold value
         mask = frame.mask(thresh)
         
         if ret == True:            
+            #show img from findGeometry
             cv2.imshow('shapes', frame.findGeometry(mask))
             if cv2.waitKey(20) & 0xFF == ord('q'):
                 break
         else:
             break
 
+#this medthod will show value to find range to fit theshold 
 def threshRange():
+
+    #call windows value and it have threshold bar value
     cv2.namedWindow('value', cv2.WINDOW_FREERATIO)
     cv2.createTrackbar('Threshold Value','value',0,255,on_trackbar)
+
     cap = cv2.VideoCapture(1)
 
     if cap.isOpened() == False:
@@ -42,7 +53,6 @@ def threshRange():
             break
         
         
-
 
 def main():
     while True:
